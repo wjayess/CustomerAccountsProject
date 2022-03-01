@@ -3,14 +3,19 @@
 #include <string>
 #include <iostream>
 
+struct Address {
+	std::string city,
+		state,
+		street;
+	int zip,
+		houseNumber;
+};
+
 struct Customer {
 	std::string name,
-		address,
-		city,
-		state,
 		lastPayDate;
-	int zip = 0,
-		phoneNumber = 0,
+	Address address;
+	int	phoneNumber = 0,
 		accountBalance = 0;
 	bool infoEntered = false;
 };

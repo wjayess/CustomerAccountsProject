@@ -25,10 +25,11 @@ void ViewData(Customer customerView)
 	}
 
 	cout << "Customer's name: " << customerView.name << endl;
-	cout << customerView.name << "'s address: " << customerView.address << endl;
-	cout << customerView.name << "'s city: " << customerView.city << endl;
-	cout << customerView.name << "'s state: " << customerView.state << endl;
-	cout << customerView.name << "'s zip: " << customerView.zip << endl;
+	cout << customerView.name << "'s house number: " << customerView.address.houseNumber << endl;
+	cout << customerView.name << "'s street: " << customerView.address.street << endl;
+	cout << customerView.name << "'s city: " << customerView.address.city << endl;
+	cout << customerView.name << "'s state: " << customerView.address.state << endl;
+	cout << customerView.name << "'s zip: " << customerView.address.zip << endl;
 	cout << customerView.name << "'s phone number: " << customerView.phoneNumber << endl;
 	cout << customerView.name << "'s account balance: " << customerView.accountBalance << endl;
 	cout << customerView.name << "'s last pay date: " << customerView.lastPayDate << endl;
@@ -40,13 +41,14 @@ void EditData(Customer customerEdit)
 
 	cout << "What about " << customerEdit.name << "'s profile would you like to edit?\n";
 	cout << "1. Name\n";
-	cout << "2. Street address\n";
-	cout << "3. City\n";
-	cout << "4. State\n";
-	cout << "5. Zip\n";
-	cout << "6. Phone number\n";
-	cout << "7. Account balance\n";
-	cout << "8. Last payment date\n";
+	cout << "2. House number\n";
+	cout << "3. Street\n";
+	cout << "4. City\n";
+	cout << "5. State\n";
+	cout << "6. Zip\n";
+	cout << "7. Phone number\n";
+	cout << "8. Account balance\n";
+	cout << "9. Last payment date\n";
 
 	cin >> choice;
 
@@ -57,32 +59,36 @@ void EditData(Customer customerEdit)
 		cin >> customerEdit.name;
 		break;
 	case 2:
-		cout << "Enter " << customerEdit.name << "'s new street address:\n";
-		getline(cin, customerEdit.address);
+		cout << "Enter " << customerEdit.name << "'s new house number:\n";
+		cin >> customerEdit.address.houseNumber;
 		break;
 	case 3:
-		cout << "Enter " << customerEdit.name << "'s new city:\n";
-		cin >> customerEdit.city;
+		cout << "Enter " << customerEdit.name << "'s new street:\n";
+		cin >> customerEdit.address.street;
 		break;
 	case 4:
-		cout << "Enter " << customerEdit.name << "'s new state:\n";
-		cin >> customerEdit.state;
+		cout << "Enter " << customerEdit.name << "'s new city:\n";
+		cin >> customerEdit.address.city;
 		break;
 	case 5:
-		cout << "Enter " << customerEdit.name << "'s new zip:\n";
-		cin >> customerEdit.zip;
+		cout << "Enter " << customerEdit.name << "'s new state:\n";
+		cin >> customerEdit.address.state;
 		break;
 	case 6:
+		cout << "Enter " << customerEdit.name << "'s new zip:\n";
+		cin >> customerEdit.address.zip;
+		break;
+	case 7:
 		cout << "Enter " << customerEdit.name << "'s new phone number:\n";
 		cin >> customerEdit.phoneNumber;
 		break;
-	case 7:
+	case 8:
 		cout << "Enter " << customerEdit.name << "'s new account balance:\n";
 		cin >> customerEdit.accountBalance;
 		break;
-	case 8:
+	case 9:
 		cout << "Enter " << customerEdit.name << "'s new last payment date:\n";
-		getline(cin, customerEdit.lastPayDate);
+		cin >> customerEdit.lastPayDate;
 		break;
 	}
 }
@@ -93,20 +99,22 @@ void EnterData(Customer customerEnter)
 
 	cout << "Enter the customer's name:\n";
 	cin >> customerEnter.name;
-	cout << "Enter the customer's street address:\n";
-	getline(cin, customerEnter.address);
+	cout << "Enter the customer's house number:\n";
+	cin >> customerEnter.address.houseNumber;
+	cout << "Enter the customer's street:\n";
+	cin >> customerEnter.address.street;
 	cout << "Enter the customer's city:\n";
-	cin >> customerEnter.city;
+	cin >> customerEnter.address.city;
 	cout << "Enter the customer's state:\n";
-	cin >> customerEnter.state;
+	cin >> customerEnter.address.state;
 	cout << "Enter the customer's zip:\n";
-	cin >> customerEnter.zip;
+	cin >> customerEnter.address.zip;
 	cout << "Enter the customer's phone number:\n";
 	cin >> customerEnter.phoneNumber;
 	cout << "Enter the customer's account balance:\n";
 	cin >> customerEnter.accountBalance;
 	cout << "Enter the customer's last payment date:\n";
-	getline(cin, customerEnter.lastPayDate);
+	cin >> customerEnter.lastPayDate;
 
 	customerEnter.infoEntered = true;
 }
@@ -116,10 +124,11 @@ void SaveData(Customer originalCustomers[], Customer customersTemp[], int custom
 	for (int count = 0; count < customerAmount - 1; count++)
 	{
 		customersTemp[count].name = originalCustomers[count].name;
-		customersTemp[count].address = originalCustomers[count].address;
-		customersTemp[count].city = originalCustomers[count].city;
-		customersTemp[count].state = originalCustomers[count].state;
-		customersTemp[count].zip = originalCustomers[count].zip;
+		customersTemp[count].address.houseNumber = originalCustomers[count].address.houseNumber;
+		customersTemp[count].address.street = originalCustomers[count].address.street;
+		customersTemp[count].address.city = originalCustomers[count].address.city;
+		customersTemp[count].address.state = originalCustomers[count].address.state;
+		customersTemp[count].address.zip = originalCustomers[count].address.zip;
 		customersTemp[count].phoneNumber = originalCustomers[count].phoneNumber;
 		customersTemp[count].accountBalance = originalCustomers[count].accountBalance;
 		customersTemp[count].lastPayDate = originalCustomers[count].lastPayDate;
@@ -131,10 +140,11 @@ void LoadData(Customer originalCustomers[], Customer customersTemp[], int custom
 	for (int count = 0; count < customerAmount - 1; count++)
 	{
 		originalCustomers[count].name = customersTemp[count].name;
-		originalCustomers[count].address = customersTemp[count].address;
-		originalCustomers[count].city = customersTemp[count].city;
-		originalCustomers[count].state = customersTemp[count].state;
-		originalCustomers[count].zip = customersTemp[count].zip;
+		originalCustomers[count].address.houseNumber = customersTemp[count].address.houseNumber;
+		originalCustomers[count].address.street = customersTemp[count].address.street;
+		originalCustomers[count].address.city = customersTemp[count].address.city;
+		originalCustomers[count].address.state = customersTemp[count].address.state;
+		originalCustomers[count].address.zip = customersTemp[count].address.zip;
 		originalCustomers[count].phoneNumber = customersTemp[count].phoneNumber;
 		originalCustomers[count].accountBalance = customersTemp[count].accountBalance;
 		originalCustomers[count].lastPayDate = customersTemp[count].lastPayDate;
