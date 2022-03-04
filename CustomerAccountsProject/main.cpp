@@ -11,7 +11,8 @@ int main()
 	// Having these variables, along with a lot of other functionality in main function, 
 	// as there's a lot of moving parts.
 	int customerAmount = 10;
-	int customerChoice;
+	std::string customerChoice;
+	int customerChoiceIndex;
 	int menuChoice;
 
 	// DAM array for customers. This can be edited during runtime.
@@ -32,65 +33,73 @@ int main()
 
 		cin >> menuChoice;
 
-		// input validation
+		// Input validation
 		if (menuChoice == 1 || menuChoice == 2 || menuChoice == 3)
 		{
 			switch (menuChoice)
 			{
 			case 1:
-				cout << "What customer number's data would you like to view?\n";
-				cout << "(Remember, this number is zero-indexed!)\n";
+				cout << "What customer would you like to view?\n";
 				cin >> customerChoice;
 
-				// more input validation
-				if ((customerChoice <= (customerAmount - 1)) && customerChoice >= 0)
+				// Loop through and find the names of customers. If one matches, select that data.
+				// If we can't find the data, have the user enter a new person's data.
+				for (int count = 0; count < customerAmount; count++)
 				{
-					// Pass customer info to ViewData()
-					ViewData(customers[customerChoice]);
+					if (customers[count].name == customerChoice)
+						customerChoiceIndex = count;
+					else if (count == (customerAmount - 1))
+					{
+						customerChoiceIndex = count;
+						customers[customerChoiceIndex] = EnterData();
+					}
 				}
-				else
-				{
-					cout << "Please enter a number from 0 to " << customerAmount - 1 << ".\n";
-				}
+
+				// Pass customer info to ViewData()
+				ViewData(customers[customerChoiceIndex]);
 
 				break;
 			case 2:
-				cout << "What customer number would you like to edit?\n";
+				cout << "What customer would you like to edit?\n";
 				cin >> customerChoice;
 
-				// as you can see, there's a LOT of input validation.
-				if ((customerChoice <= (customerAmount - 1)) && customerChoice >= 0)
+				for (int count = 0; count < customerAmount; count++)
 				{
-					if (customers[customerChoice].infoEntered == true)
+					if (customers[count].name == customerChoice)
+						customerChoiceIndex = count;
+					else if (count == (customerAmount - 1))
 					{
-						// very chunky function. main() wouldn't be the best place for it lol
-						EditData(customers[customerChoice]);
+						customerChoiceIndex = count;
+						customers[customerChoiceIndex] = EnterData();
 					}
-					else
-					{
-						// EnterData() returns the customer data we need to give to the current customer choice.
-						customers[customerChoice] = EnterData();
-					}
+				}
+
+				// Member variable that allows us to see if the customer has been edited before.
+				// If not, the person is obviously new, so lets edit their data.
+				if (customers[customerChoiceIndex].infoEntered == true)
+				{
+					EditData(customers[customerChoiceIndex]);
 				}
 				else
 				{
-					cout << "Please enter a number from 0 to " << customerAmount - 1 << ".\n";
+					// EnterData() returns the customer data we need to give to the current customer choice.
+					customers[customerChoiceIndex] = EnterData();
 				}
 
 				break;
 			case 3:
 				// Above all else, this is my favorite part.
-				// increase the amount of elements
+				// Increase the amount of elements.
 				customerAmount++;
 
-				// create another DAM
+				// Create another DAM array
 				Customer* customersTemp = nullptr;
 				customersTemp = new Customer[customerAmount];
 
 				// Copy all the data from the customers array to the new temporary array.
 				CopyData(customers, customersTemp, customerAmount);
 
-				// delete original DAM array, and recreate it with the new element amount
+				// Delete original DAM array, and recreate it with the new element amount
 				delete[] customers;
 				customers = nullptr;
 				customers = new Customer[customerAmount];
@@ -98,10 +107,10 @@ int main()
 				// Copy all data from the temporary to the newly "refreshed" customers array
 				CopyData(customersTemp, customers, customerAmount);
 
-				// enter the data on the last person
+				// Enter the data on the last person
 				customers[customerAmount - 1] = EnterData();
 
-				// delete the temporary DAM array.
+				// Delete the temporary DAM array.
 				delete[] customersTemp;
 				customersTemp = nullptr;
 
@@ -115,6 +124,6 @@ int main()
 
 	}
 
-	// get outta here
+	// get outta here, you DAM array! sorry i had to
 	delete[] customers;
 }
