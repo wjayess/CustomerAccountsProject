@@ -3,6 +3,7 @@
 #include <string>
 #include <iostream>
 
+// main struct for Customer
 struct Customer {
 	std::string name,
 		address,
@@ -15,9 +16,9 @@ struct Customer {
 	bool infoEntered = false;
 };
 
+// function prototypes
 void EditData(Customer&);
 Customer EnterData();
-Customer ChooseCustomer(Customer[], int, int);
 void ViewData(Customer&);
-void SaveData(Customer[], Customer[], int);
-void LoadData(Customer[], Customer[], int);
+void CopyData(Customer[], Customer[], int);
+void EmptyCheck(std::string&, std::string);
